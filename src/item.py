@@ -65,7 +65,7 @@ class Item:
         with open(path, 'r', newline='') as attributes:
             attribute = csv.DictReader(attributes)
             for attr in attribute:
-                name = attr['name'],
+                name = attr['name']
                 price = cls.string_to_number(attr['price'])
                 quantity = cls.string_to_number(attr['quantity'])
                 items_csv = Item(name, price, quantity)

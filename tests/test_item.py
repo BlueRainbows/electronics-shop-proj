@@ -32,3 +32,11 @@ def test_len_name():
     item_5 = Item('Планшет', 15000, 5)
     item_5.name = 'УльтраплоскийПланшет'
     assert len(item_5.name) == 10
+
+
+def test_instantiate_from_csv():
+    """ Тест на правильность преобразования и типа данных"""
+    Item.instantiate_from_csv('../src/items.csv')
+    items_6 = Item.all[1]
+    assert items_6.price == 1000
+    assert type(items_6.price) == int
