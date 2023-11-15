@@ -40,3 +40,11 @@ def test_instantiate_from_csv():
     items_6 = Item.all[1]
     assert items_6.price == 1000
     assert type(items_6.price) == int
+
+
+def test_mag_met():
+    """ Тесты проверяющие магические методы на правильность вывода """
+    items_7 = Item('Mobile', 10000, 10)
+    assert repr(items_7) == "Item('Mobile', 10000, 10)"
+    assert type(repr(items_7)) == str
+    assert len(str(items_7)) == 6
