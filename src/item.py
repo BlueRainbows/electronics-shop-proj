@@ -88,3 +88,11 @@ class Item:
 
     def __str__(self):
         return self.__name
+
+    def __add__(self, other):
+        """ Магический метод add делает проверку что:
+        Экземпляр self относиться к классу self
+        Экземпляр other наследуется от класса self """
+        if isinstance(self, self.__class__):
+            if issubclass(other.__class__, self.__class__):
+                return self.quantity + other.quantity

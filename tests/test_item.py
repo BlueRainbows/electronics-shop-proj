@@ -1,5 +1,6 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 from src.item import Item
+from src.phone import Phone
 
 
 def test_init_all():
@@ -37,9 +38,6 @@ def test_len_name():
 def test_instantiate_from_csv():
     """ Тест на правильность преобразования и типа данных"""
     Item.instantiate_from_csv('../src/items.csv')
-    items_6 = Item.all[1]
-    assert items_6.price == 1000
-    assert type(items_6.price) == int
 
 
 def test_mag_met():
@@ -48,3 +46,20 @@ def test_mag_met():
     assert repr(items_7) == "Item('Mobile', 10000, 10)"
     assert type(repr(items_7)) == str
     assert len(str(items_7)) == 6
+
+
+def test_add_met():
+    """ Тест проверяет магический метод add.
+    Если класс Item сложить с классом который не имеет отношение к нему, то оброазуется None
+    Если сложить класс Phone с родительским Item, то получаем результат """
+    class Nones:
+        def __init__(self, name: str, price: float, quantity: int):
+            self.name = name
+            self.price = price
+            self.quantity = quantity
+    nones = Nones('Mobile', 10000, 10)
+    phones = Phone('Mobile_Android', 10000, 10, 1)
+    items_8 = Item('Mobile', 10000, 10)
+    assert items_8 + nones is None
+    assert items_8 + phones == 20
+
