@@ -1,3 +1,11 @@
+class InstantiateCSVError(Exception):
+    def __init__(self):
+        self.error = 'Файл item.csv поврежден'
+
+    def __str__(self):
+        return self.error
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -61,14 +69,25 @@ class Item:
         Инициализирует значения под атрибуты класса
         """
         import csv
+        import os
         cls.all.clear()
-        with open(path, 'r', newline='') as attributes:
-            attribute = csv.DictReader(attributes)
-            for attr in attribute:
-                name = attr['name']
-                price = cls.string_to_number(attr['price'])
-                quantity = cls.string_to_number(attr['quantity'])
-                items_csv = Item(name, price, quantity)
+        paths = os.path.exists(path)
+        if paths == False:
+            raise FileNotFoundError('Отсутствует файл item.csv')
+        else:
+            with open(path, 'r', newline='') as attributes:
+                attribute = csv.DictReader(attributes)
+                for attr in attribute:
+                    if 'name' not in attr:
+                        raise InstantiateCSVError
+                    name = attr['name']
+                    if 'price' not in attr:
+                        raise InstantiateCSVError
+                    price = cls.string_to_number(attr['price'])
+                    if 'quantity' not in attr:
+                        raise InstantiateCSVError
+                    quantity = cls.string_to_number(attr['quantity'])
+                    items_csv = Item(name, price, quantity)
             return items_csv
 
     @staticmethod
